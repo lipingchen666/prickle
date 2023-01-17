@@ -11,9 +11,11 @@ const HorizontalDivider = ({
 }: HorizontalDividerProps) => {
     return (
         <div className={twMerge("flex items-center w-full justify-between", className)}>
-            <hr className={"w-2/5 border-solid border-gray-400 border-t-2"}/>
+            <hr className={"basis-2/5 border-solid border-gray-400 border-t-2 shrink"}/>
+            <div className="basis-1/5 flex justify-center items-center whitespace-nowrap px-4">
                 {children}
-            <hr className={"w-2/5 border-solid border-gray-400 border-t-2"}/>
+            </div>
+            <hr className={"basis-2/5 border-solid border-gray-400 border-t-2 shrink"}/>
         </div>
     )
 }

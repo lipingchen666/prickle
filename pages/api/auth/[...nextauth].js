@@ -20,6 +20,9 @@ export const authOptions = {
     strategy: "jwt"
   },
   adapter: MongoDBAdapter(clientPromise),
+  pages: {
+    signIn: '/auth/signin'
+  }
 }
 
 export default NextAuth(authOptions)

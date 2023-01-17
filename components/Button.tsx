@@ -114,7 +114,8 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(({
     color="teal",
     children,
     className,
-    onClick=() => {} 
+    onClick=() => {},
+    ...rest
 }, ref) => {
     const buttonDefaulStyle = getButtonStyle(buttonType, color);
     
@@ -122,6 +123,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(({
         <button
             ref={ref}
             onClick={onClick} className={twMerge(buttonDefaulStyle, className)}
+            {...rest}
         >
             {children}
         </button>
