@@ -23,13 +23,13 @@ export default function Signin() {
                             </h5>
                         </div>
                         <div className="flex flex-col space-y-3 w-full">
-                            <Button color="black" buttonType="outlined" onClick={()=> signIn("google")}>
+                            <Button color="gray" buttonType="outlined" onClick={()=> signIn("google")}>
                                 <div className="flex items-center justify-center space-x-3">
                                     <Image src="/auth/Google__G__Logo.svg" alt="google_log" height={25} width={25}/>
                                     <span>Login with Google</span>
                                 </div>
                             </Button>
-                            <Button color="black" buttonType="outlined" onClick={()=> signIn("github")}>
+                            <Button color="gray" buttonType="outlined" onClick={()=> signIn("github")}>
                                 <div className="flex items-center justify-center space-x-3">
                                     <Image src="/auth/github-mark.svg" alt="google_log" height={25} width={25}/>
                                     <span>Login with Github</span>

@@ -4,7 +4,7 @@ import get from 'lodash/get';
 import clsx from 'clsx';
 
 export type ButtonType = "outlined" | "contained" | "link";
-export type Color = "teal" | "amber" | "black"
+export type Color = "teal" | "amber" | "black" | "gray";
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
     buttonType?: ButtonType
@@ -75,12 +75,14 @@ const getButtonStyle = (buttonType: ButtonType, color: Color): string => {
         "contained": {
             "teal": "bg-teal-400",
             "black": "bg-black",
-            "amber": "bg-amber-900"
+            "amber": "bg-amber-900",
+            "gray": "bg-gray-500"
         },
         "outlined": {
             "teal": "border-amber-900",
             "black": "border-black",
-            "amber": "border-amber-900"
+            "amber": "border-amber-900",
+            "gray": "border-gray-500"
         }
     }
 
