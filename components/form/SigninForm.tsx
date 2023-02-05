@@ -1,10 +1,11 @@
+import { signIn } from "next-auth/react";
 import Link from "next/link";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { twMerge } from "tailwind-merge";
 import Button from "../Button";
 import LinkButton from "../LinkButton";
-import CheckboxInput from "./input/ChekboxInput";
+import CheckboxInput from "./input/CheckboxInput";
 import TextInput from "./input/TextInput";
 
 interface SigninFormProps {
@@ -13,40 +14,39 @@ interface SigninFormProps {
 const SigninForm = ({
     className=""
 }: SigninFormProps) => {
-    const { register, handleSubmit, watch, formState: { errors } } = useForm({
+    const { register, handleSubmit, watch, formState: { errors }, setError } = useForm({
         mode: "onBlur"
     });
-    const onSubmit = data => console.log(data);
+
+    console.log("error", errors);
+    const onSubmit = async data => { 
+        console.log(data);
+        const res = await signIn('credentials', { email: data.email, password: data.password, redirect: false });
+        if (res?.status === 401) {
+            if (res.error === "wrong email") {
+                setError("email", {
+                    type: "server",
+                    message: 'wrong email',
+                })
+            }
+            else if (res.error === "wrong password") {
+                setError("password", {
+                    type: "server",
+                    message: 'wrong password',
+                })
+            }
+        }
+        console.log("res", res);
+    } ;
 
     return (
         <form className={twMerge("w-full", className)} onSubmit={handleSubmit(onSubmit)}>
             <div className="flex flex-col space-y-7">
-                <TextInput type="email" label={"Email"} required {...register("email", { required: true })} error={!!errors.email} />
-                <TextInput type="password" label={"Password"} required {...register("password", { required: true })} error={!!errors.password} />
-                {/* <div className="flex flex-col">
-                    <div className={"flex items-center"}>
-                        <label>Email&#42;</label>
-                        <input type="email" className="p-2 h-9 border-1 border-gray-500 w-9/12 ml-auto" {...register("email", { required: true })} />
-                    </div>
-                    <span className="w-9/12 ml-auto text-red-600 text-sm">This field is required</span>
-                </div>
-                {errors.email && <span>This field is required</span>}
-                <div className={"flex items-center"}>
-                    <label>Password&#42;</label>
-                    <input className={"h-9 p-2 border-1 border-gray-500 w-9/12 ml-auto"} type="password" {...register("password", { required: true })} />
-                </div>
-                {errors.password && <span>This field is required</span>} */}
+                <TextInput type="email" label={"Email"} required {...register("email", { required: "This field is required" })} error={!!errors.email} errorMessage={typeof errors.email?.message === "string" ? errors.email?.message : "" } />
+                <TextInput type="password" label={"Password"} required {...register("password", { required: "This field is required" })} error={!!errors.password} errorMessage={typeof errors.password?.message === "string" ? errors.password?.message : "" } />
             </div>
             <div className="flex mt-7">
                 <CheckboxInput {...register("rememberMe")} label={"Remember Me"}/>
-                {/* <div className="mr-auto items-center space-x-2.5">
-                    <input {...register("checkbox")} type="checkbox" value="A" />
-                    <label>Remember Me</label>
-                </div> */}
-                {/* <Link href="/">
-                    Forgot your password?
-                </Link> */}
-            
                 <LinkButton href="/" className="ml-auto font-normal">
                     <span className="hover:underline">Forgot your password?</span>
                 </LinkButton>
@@ -55,7 +55,7 @@ const SigninForm = ({
                 <LinkButton href="/">
                     Create an account now!
                 </LinkButton>
-                <Button>
+                <Button type="submit">
                     Sign in
                 </Button>
             </div>

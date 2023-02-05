@@ -30,7 +30,7 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(({
             <div className={twMerge("flex items-center", labelAndInputContainerClassName)}>
                 {label && required && <label className={twMerge("", labelClassName)}>{label}&#42;</label>}
                 {label && !required && <label className={twMerge("", labelClassName)}>{label}</label>}
-                <input ref={ref} type={type} className={twMerge(`p-2 h-9 border-1 ${error ? "border-red-600" : "border-gray-500"} ${label ? "w-9/12": "w-full"} ml-auto`, inputClassName)} {...rest} />
+                <input ref={ref} type={type} className={twMerge(`p-2 h-9 border-1 rounded focus:outline focus:outline-1 ${error ? "focus:outline-red-600 outlined-red-600 border-red-600" : "focus:outline-blue-500 outline-blue-500 border-gray-500"} ${label ? "w-9/12": "w-full"} ml-auto`, inputClassName)} {...rest} />
             </div>
             {error && <span className={`${label ? "w-9/12": "w-full"} ml-auto text-red-600 text-sm`}>{errorMessage}</span>}
         </div>
